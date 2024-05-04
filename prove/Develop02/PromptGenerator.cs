@@ -1,23 +1,25 @@
-using System.Collections.Generic;
 public class PromptGenerator
+
 {
 
-      public List<string> _prompts = new List<string>();
+  public List<string> _prompts = new List<string>(){
+  
+    "What was your favorite part about today?",
 
-        _prompt.Add("What was your favorite part about today?");
+    "What did you learn about in your gospel study?",
 
-        _prompt.Add("What did you learn about in your gospel study?");
+    "What interesting conversation did you have with someone?",
 
-        _prompt.Add("What interesting conversation did you have with someone?");
+    "What did you enjoy seeing today?",
 
-        _prompt.Add("What did you enjoy seeing today?");
-
-        _prompt.Add("If there is one thing you could improve, what would it be?");
-
-        public string GetRandomPrompt()
-        {
-            
-            return"";
-        }
-
+    "If there is one thing you could improve, what would it be?"
+  };
+  public string GetRandomPrompt()
+    {
+      Random random = new Random();
+      int index = random.Next(0,_prompts.Count);
+       
+      return _prompts[index];
+    }
+    
 }

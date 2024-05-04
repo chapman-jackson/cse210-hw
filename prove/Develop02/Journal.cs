@@ -1,47 +1,55 @@
 using System.IO;
+using System.Collections.Generic;
+using System.IO.Compression;
 
 public class Journal 
 {
-    public List<Entry> _entries;
+    public List<Entry> _entries = new List<Entry>();
+    
+
+
 
     public void AddEntry(Entry newEntry)
     {
-
+            _entries.Add(newEntry);
     }
 
     public void DisplayAll()
     {
-        string fileName = "journal.txt";
-        string[]entries = System.IO.File.ReadAllLines(fileName);
-        foreach (string entry in entries)
-
+        foreach (Entry journalEntry in _entries)
         {
-            string [] sections = entry.Split("---");
-            string segments = sections[0];
-            
+            Console.WriteLine($"{journalEntry._date} - prompt: {journalEntry._promptText} > {journalEntry._entryText}");
         }
-        
     }
 
     public void SaveToFile(String file)
     {
-                string fileName = "journal.txt";
-        using (StreamWriter outputFile = new StreamWriter(fileName))
+      string fileName = file;
+
+      using (StreamWriter outputFile = new StreamWriter(fileName))
+{
+    
+       foreach (Entry journalEntry in _entries)
         {
-            outputFile.WriteLine(file);
+            outputFile.WriteLine($"-*-{journalEntry._date}-*- -*- {journalEntry._promptText}-*- -*- {journalEntry._entryText}-*-");
         }
+    
+   
+}
     }
 
-    public void LoadFromFile(String file)
+    public void LoadFromFile(string file)
     {
-         file = "journal.txt";
-        string[]entries = System.IO.File.ReadAllLines(file);
-        foreach (string entry in entries)
-
+        _entries.Clear();
+        string[] fileEntry = System.IO.File.ReadAllLines(file);
+        foreach ( string journalEntry in fileEntry)
         {
-            string [] sections = entry.Split("---");
-            string segments = sections[0];
-            string newSegments = sections[1];
+            string[] segments = journalEntry.Split("-*-");
+            string date = segments[0];
+            string prompt = segments[1];
+            string entry = segments[2];
+  
         }
+        
     }
 }

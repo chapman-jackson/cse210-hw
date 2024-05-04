@@ -12,6 +12,8 @@ class Program
 
         int choice = -999999999;
 
+        Journal myJournal = new Journal();
+
         while (choice != 5)
         {
             Console.WriteLine("Please choose an option:");
@@ -20,49 +22,57 @@ class Program
             Console.WriteLine("3. Load");
             Console.WriteLine("4. Save");
             Console.WriteLine("5. Quit");
-            choice =int.Parse(Console.ReadLine());
+            choice = int.Parse(Console.ReadLine());
+
+            
 
             if (choice == 1)
             {
-                //PromptGenerator prompt = new PromptGenerator();
-  
-                //Console.WriteLine(prompt);
+                PromptGenerator promptGenerator = new PromptGenerator();
+                string newPrompt = promptGenerator.GetRandomPrompt();
+                Console.WriteLine($"{newPrompt}");
                 Console.WriteLine("");
                 string entryNew = System.Console.ReadLine();
-                List<string> entries = new List<string>();
                 DateTime CurrentTime = DateTime.Now;
                 string dateText = CurrentTime.ToShortDateString();
 
-                Entry entry = new Entry();
-                entry._date = dateText;
-                entry._promptText = "";
-                entry._entryText = entryNew;
+                Entry newEntry = new Entry();
+                newEntry._date = dateText;
+                newEntry._promptText = newPrompt;
+                newEntry._entryText = entryNew;
 
-                entry.Display();
+                myJournal.AddEntry(newEntry);
             }
 
             else if (choice == 2)
             {
-                Journal myJournal = new Journal();
                 myJournal.DisplayAll();
             }
 
             else if (choice == 3)
             {
-
                 Console.WriteLine("What file do you want to load from?");
                 string file = Console.ReadLine();
 
-                
+                myJournal.LoadFromFile(file);        
+                Entry newEntry = new Entry();
+                newEntry._date = "";
+                newEntry._promptText = "";
+                newEntry._entryText = "";
+
+                myJournal.AddEntry(newEntry);
+                Console.WriteLine("Journal loaded.")  ;                   
+
             }
 
             else if (choice == 4)
             {
-
                 Console.WriteLine("What is the file you want to save to?");
-                string fileName = Console.ReadLine();
-                Journal myJournal = new Journal();
-
+                string file = Console.ReadLine();
+                
+                
+                myJournal.SaveToFile(file);
+                Console.WriteLine("Entry saved.");
                 
             }
 
