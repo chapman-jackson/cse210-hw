@@ -4,9 +4,10 @@ public class Scripture
     private Reference _reference;
     private List<Word> _words = new List<Word>();
 
-    public Scripture( Reference _reference, string text)
+    public Scripture( Reference reference, string text)
     {
-        
+        _reference = reference;
+
         string[] words = text.Split(" ");
 
         foreach (string word in words)
@@ -19,7 +20,7 @@ public class Scripture
 
     public void HideRandomWords(int numberToHide)
     {
-
+        
             Random random = new Random();
 
             for (int number = 0; number < numberToHide; number++)
@@ -32,7 +33,11 @@ public class Scripture
     public string GetDisplayText()
     {
     
-        string passage = $"{_words} ";
+        string passage = $"{_reference.GetDisplayText()}";
+        foreach (Word word in _words) 
+        {
+        passage = passage + " " + word.GetDisplayText() + " ";
+        }
         return passage;
     }
 

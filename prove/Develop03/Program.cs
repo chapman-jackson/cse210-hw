@@ -1,11 +1,11 @@
+// For the grader:
 // The user can enter the reference and scripture passage of their choosing into the program.
 using System;
 class Program
 {
     static void Main(string[] args)
     {
-        string userInput = "placeholder";
-
+        
         Console.WriteLine("Enter a Book of Mormon book title.");
         string bOfm = Console.ReadLine();
 
@@ -24,24 +24,36 @@ class Program
         Console.WriteLine("Enter the words of the scripture you want to memorize.");
         string scriptureWords = Console.ReadLine();
 
+        Console.WriteLine("Press 'enter' to begin memoriing.");
+        string enter = Console.ReadLine();
+
+        string userInput = "placeholder";
+
         Reference reference = new Reference(bOfm,bOfmChapter,chapterVerse,EndChapterVerse);
         Scripture scripture = new Scripture(reference,scriptureWords);
         
-        while (userInput != "quit")
-
         
+        while (!scripture.IsCompletelyHidden() && userInput != "quit")
+
         {
             Console.Clear();
 
+            scripture.HideRandomWords(3);
             Console.WriteLine(scripture.GetDisplayText());
             Console.WriteLine();
             Console.WriteLine("Press enter to continue or type 'quit' to end the program.");
             userInput = Console.ReadLine();
+
             
-            // if (scripture.IsCompletelyHidden() = true);
-            // {
-            // Console.Writeline("Goodbye.");
-            //   }
+             if (scripture.IsCompletelyHidden())
+             {
+                Console.WriteLine("Good job memorizing!");
+             }
+
+             else
+             {
+                Console.WriteLine("Keep up the great work!");
+             }
         }
 
     }
